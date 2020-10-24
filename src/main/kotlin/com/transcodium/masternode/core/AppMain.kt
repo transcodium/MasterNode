@@ -27,6 +27,10 @@ class AppMain {
 
             System.setProperty("java.net.preferIPv4Stack", "true")
 
+            //load system config
+            val mainConfig = Config.loadConfig()!!
+
+            println(mainConfig)
         } //end main
 
     } //end companion obj

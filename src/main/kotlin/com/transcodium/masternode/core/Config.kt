@@ -13,22 +13,39 @@
 package com.transcodium.masternode.core
 
 import com.typesafe.config.ConfigFactory
+import com.typesafe.config.Config as HConfig
 
 class Config {
     companion object {
+
+        private val logger = Logger.getLogger(this::class)
+        private var config: HConfig? = null;
 
         /**
          * loadConfig
          * This loads the config file in the config directory
          */
-        suspend fun loadConfig(){
+         fun loadConfig(): HConfig? {
 
-            val configFile = basePath(this::class)
-                                .resolve("config/main.conf")
-                                .absolutePath
+            if(config != null){
+                return config!!
+            }
 
-            val cf = ConfigFactory.load(configFile)
+            try {
+
+                val configFile = basePath(this::class)
+                    .resolve("config/main.conf")
+                    .absolutePath
+
+                return ConfigFactory.load(configFile)
+
+            } catch(e: Exception){
+                logger.fatal("failed to load configuration file: ${e.message}",e)
+                return null
+            }
+
         } //end fun
 
-    }
+
+    } //end companion object
 }

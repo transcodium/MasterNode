@@ -16,6 +16,8 @@ dependencies {
     implementation("com.typesafe:config:1.4.0")
     implementation ("org.web3j:core:4.6.3")
     implementation("com.github.ipfs:java-ipfs-http-client:v1.3.3")
+    implementation("org.apache.logging.log4j:log4j-api:2.13.3")
+    implementation("org.apache.logging.log4j:log4j-core:2.13.3")
 }
 
 tasks.withType<KotlinCompile>() {

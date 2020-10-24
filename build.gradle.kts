@@ -1,8 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val ktorVersion = "1.4.10"
+val coroutineVersion = "1.4.0-M1"
+
 plugins {
     kotlin("jvm") version "1.4.10"
 }
+
+
 group = "com.transcodium"
 version = "1.0-SNAPSHOT"
 
@@ -12,6 +17,10 @@ repositories {
 }
 dependencies {
     testImplementation(kotlin("test-junit"))
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+
     implementation("com.github.tomp2p:TomP2P:tomp2p-parent-5.0-Beta8.1")
     implementation("com.typesafe:config:1.4.0")
     implementation ("org.web3j:core:4.6.3")

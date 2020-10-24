@@ -26,7 +26,7 @@ class Config {
             val configFile = basePath(this::class)
                                 .resolve("config/main.conf")
                                 .absolutePath
-            
+
             val cf = ConfigFactory.load(configFile)
         } //end fun
 

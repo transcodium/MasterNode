@@ -36,7 +36,7 @@ fun basePath(callerClass: KClass<*>? = null): File {
         }
 
         System.setProperty("app.dir",appDir)
-    }
+    } //end if
 
     return File(appDir)
 }//end

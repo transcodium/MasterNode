@@ -12,6 +12,8 @@
 
 package com.transcodium.masternode.core
 
+import com.transcodium.masternode.core.tns_master_node.MasterNodeCore
+
 class AppMain {
 
     companion object {
@@ -30,7 +32,14 @@ class AppMain {
             //load system config
             val mainConfig = Config.loadConfig()!!
 
-            println(mainConfig)
+            val masterNodeConfig = mainConfig.getConfig("masterNode")
+
+            val isMasterNodeEnabled = masterNodeConfig.getBoolean("enabled")
+
+            if(isMasterNodeEnabled){
+                MasterNodeCore.startMasterNode(mainConfig)
+            }
+
         } //end main
 
     } //end companion obj

@@ -34,10 +34,10 @@ class Config {
             try {
 
                 val configFile = basePath(this::class)
-                    .resolve("config/main.conf")
-                    .absolutePath
+                                    .resolve("config/main.conf")
 
-                return ConfigFactory.load(configFile)
+                return ConfigFactory.parseFile(configFile)
+                                    .getConfig("tnsNode")
 
             } catch(e: Exception){
                 logger.fatal("failed to load configuration file: ${e.message}",e)

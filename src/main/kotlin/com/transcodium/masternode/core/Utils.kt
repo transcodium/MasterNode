@@ -12,8 +12,13 @@
 
 package com.transcodium.masternode.core
 
+import kotlinx.coroutines.*
 import java.io.File
 import kotlin.reflect.KClass
+import com.typesafe.config.Config as HConfig
+
+
+val logger by lazy { Logger.getLogger("Utils.kt") }
 
 /**
  *basePath - App's Root Directory
@@ -40,3 +45,50 @@ fun basePath(callerClass: KClass<*>? = null): File {
 
     return File(appDir)
 }//end
+
+
+/**
+ * coroutine launch
+ */
+fun launch(block : suspend CoroutineScope.() -> Unit): Job {
+
+    val scope = CoroutineScope(Dispatchers.Default)
+
+    return scope.launch {
+        try {
+            block.invoke(this)
+        } catch (e: Exception){
+            logger.fatal(e.message,e)
+            throw e
+        }
+    }
+}
+
+/**
+ * coroutine async
+ */
+fun <T>async(block : suspend CoroutineScope.() -> T) : Deferred<T> {
+
+    val scope = CoroutineScope(Dispatchers.IO)
+
+    return  scope.async{
+        try {
+            block.invoke(this)
+        } catch (e: Exception){
+            logger.fatal(e.message,e)
+            throw e
+        }
+    }
+}
+
+/**
+ * HConfig Extension to allow setting of defaults
+ **/
+fun <T>HConfig.get(key: String, default: T?): T? {
+
+    if(!hasPath(key)){
+          return default
+    }
+
+    return getAnyRef(key) as T?
+}//end fun
